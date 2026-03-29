@@ -1,0 +1,867 @@
+<!DOCTYPE html><html dir="ltr" lang="zh-CN" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="canonical" href="https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/"><meta name="generator" content="Astro v5.16.6"><!-- Load Font --><style>@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/9617ee3bc3ad47fd.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:300;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/9617ee3bc3ad47fd.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:400;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/9617ee3bc3ad47fd.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:500;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/9617ee3bc3ad47fd.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:600;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/9617ee3bc3ad47fd.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:700;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/616354e20c7baae2.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:300;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/616354e20c7baae2.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:400;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/616354e20c7baae2.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:500;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/616354e20c7baae2.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:600;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/616354e20c7baae2.woff2") format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;font-weight:700;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/b9b1204819f100df.woff") format("woff");font-display:swap;font-weight:300;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/5df55b3063a898b1.woff") format("woff");font-display:swap;font-weight:400;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/ec1bc5e628148563.woff") format("woff");font-display:swap;font-weight:500;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/e7919ecb26ea3d50.woff") format("woff");font-display:swap;font-weight:600;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/4658b641b3fab2bc.woff") format("woff");font-display:swap;font-weight:700;font-style:italic;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/7899455dad18d8ba.woff") format("woff");font-display:swap;font-weight:300;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/cba962b31d4afe4c.woff") format("woff");font-display:swap;font-weight:400;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/30e8e98a4dbebc0f.woff") format("woff");font-display:swap;font-weight:500;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/c0e7258d0ce6ea15.woff") format("woff");font-display:swap;font-weight:600;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992";src:url("/_astro/fonts/06e1bbacbb2d03d8.woff") format("woff");font-display:swap;font-weight:700;font-style:normal;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:300;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:400;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:500;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:600;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:700;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:300;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:400;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:500;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:600;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:700;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:300;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:400;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:500;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:600;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:700;font-style:italic;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:300;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:400;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:500;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:600;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}@font-face{font-family:"Google Sans Code-04a186ad63205992 fallback: Courier New";src:local("Courier New");font-display:swap;font-weight:700;font-style:normal;size-adjust:99.9837%;ascent-override:96.6157%;descent-override:28.6047%;}:root{--font-google-sans-code:"Google Sans Code-04a186ad63205992","Google Sans Code-04a186ad63205992 fallback: Courier New",monospace;}</style><!-- General Meta Tags --><title>从 dispatch 到 ACP：用 OpenClaw 重建我的开发协作流程 | 阿德的博客</title><meta name="title" content="从 dispatch 到 ACP：用 OpenClaw 重建我的开发协作流程 | 阿德的博客"><meta name="description" content="基于本机 coder agent 过去几周的真实使用记录，复盘为什么要从基于自定义 dispatch skills 的 Claude Code 派发流程，迁移到 OpenClaw 原生 ACP，并给出一套更稳的开发协作重建思路。"><meta name="author" content="阿德"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:title" content="从 dispatch 到 ACP：用 OpenClaw 重建我的开发协作流程 | 阿德的博客"><meta property="og:description" content="基于本机 coder agent 过去几周的真实使用记录，复盘为什么要从基于自定义 dispatch skills 的 Claude Code 派发流程，迁移到 OpenClaw 原生 ACP，并给出一套更稳的开发协作重建思路。"><meta property="og:url" content="https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/"><meta property="og:image" content="https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2026-03-29T01:09:00.000Z"><meta property="article:modified_time" content="2026-03-29T01:09:00.000Z"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/"><meta property="twitter:title" content="从 dispatch 到 ACP：用 OpenClaw 重建我的开发协作流程 | 阿德的博客"><meta property="twitter:description" content="基于本机 coder agent 过去几周的真实使用记录，复盘为什么要从基于自定义 dispatch skills 的 Claude Code 派发流程，迁移到 OpenClaw 原生 ACP，并给出一套更稳的开发协作重建思路。"><meta property="twitter:image" content="https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"从 dispatch 到 ACP：用 OpenClaw 重建我的开发协作流程 | 阿德的博客","image":"https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/index.png","datePublished":"2026-03-29T01:09:00.000Z","dateModified":"2026-03-29T01:09:00.000Z","author":[{"@type":"Person","name":"阿德","url":"https://miniade.github.io/"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="阿德的博客" href="https://miniade.github.io/rss.xml"><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.QW52Ox2j.js"></script><!-- Minimal inline script to prevent FOUC - sets theme immediately --><script>
+      (function () {
+        const initialColorScheme = ""; // "light" | "dark"
+        const currentTheme = localStorage.getItem("theme");
+
+        function getPreferTheme() {
+          if (currentTheme) return currentTheme;
+          if (initialColorScheme) return initialColorScheme;
+          return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+
+        const themeValue = getPreferTheme();
+
+        // Set theme immediately to prevent flash
+        document.firstElementChild?.setAttribute("data-theme", themeValue);
+
+        // Export minimal API for external script
+        window.theme = {
+          themeValue: themeValue,
+          getTheme: () => window.theme.themeValue,
+          setTheme: val => {
+            window.theme.themeValue = val;
+          },
+        };
+      })();
+    </script><style>:where([data-astro-image]){object-fit:var(--fit);object-position:var(--pos);height:auto}:where([data-astro-image=full-width]){width:100%}:where([data-astro-image=constrained]){max-width:100%}
+</style>
+<link rel="stylesheet" href="/_astro/about.FhLshl_N.css">
+<style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}[data-astro-transition-scope]{animation:none!important}}
+</style><style>[data-astro-transition-scope="astro-fam6wyqg-1"] { view-transition-name: \4ECE-dispatch-\5230-acp\FF1A\7528-open-claw-\91CD\5EFA\6211\7684\5F00\53D1\534F\4F5C\6D41\7A0B; }@layer astro { ::view-transition-old(\4ECE-dispatch-\5230-acp\FF1A\7528-open-claw-\91CD\5EFA\6211\7684\5F00\53D1\534F\4F5C\6D41\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(\4ECE-dispatch-\5230-acp\FF1A\7528-open-claw-\91CD\5EFA\6211\7684\5F00\53D1\534F\4F5C\6D41\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(\4ECE-dispatch-\5230-acp\FF1A\7528-open-claw-\91CD\5EFA\6211\7684\5F00\53D1\534F\4F5C\6D41\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(\4ECE-dispatch-\5230-acp\FF1A\7528-open-claw-\91CD\5EFA\6211\7684\5F00\53D1\534F\4F5C\6D41\7A0B) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-fam6wyqg-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-fam6wyqg-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-2"] { view-transition-name: openclaw; }@layer astro { ::view-transition-old(openclaw) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(openclaw) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(openclaw) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(openclaw) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-2"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-2"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-3"] { view-transition-name: acp; }@layer astro { ::view-transition-old(acp) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(acp) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(acp) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(acp) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-3"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-3"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-4"] { view-transition-name: ai-agent; }@layer astro { ::view-transition-old(ai-agent) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(ai-agent) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(ai-agent) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(ai-agent) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-4"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-4"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-5"] { view-transition-name: workflow; }@layer astro { ::view-transition-old(workflow) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(workflow) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(workflow) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(workflow) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-5"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-5"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-6"] { view-transition-name: automation; }@layer astro { ::view-transition-old(automation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(automation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(automation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(automation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-6"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-6"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-6"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-6"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-6"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-6"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-6"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-6"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-7"] { view-transition-name: claude-code; }@layer astro { ::view-transition-old(claude-code) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(claude-code) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(claude-code) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(claude-code) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-7"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-7"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-7"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-7"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-7"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-7"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-7"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-7"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-8"] { view-transition-name: codex; }@layer astro { ::view-transition-old(codex) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(codex) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(codex) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(codex) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-8"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-8"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-8"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-8"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-8"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-8"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-8"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-8"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style><style>[data-astro-transition-scope="astro-36ssibgs-9"] { view-transition-name: engineering; }@layer astro { ::view-transition-old(engineering) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(engineering) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(engineering) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(engineering) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-9"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-9"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-9"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-9"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-36ssibgs-9"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-36ssibgs-9"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-36ssibgs-9"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-36ssibgs-9"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body>  <a id="skip-to-content" href="#main-content" class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4">
+Skip to content
+</a> <header class="app-layout flex flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="py-4 sm:py-6 border-b border-border relative w-full bg-background flex items-baseline justify-between sm:items-center"> <a href="/" class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"> 阿德的博客 </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <button id="menu-btn" class="focus-outline self-end p-2 sm:hidden" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&#38;>li>a]:block [&#38;>li>a]:px-4 [&#38;>li>a]:py-3 [&#38;>li>a]:text-center [&#38;>li>a]:font-medium [&#38;>li>a]:hover:text-accent sm:[&#38;>li>a]:px-2 sm:[&#38;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/posts" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/tags">
+Tags
+</a> </li> <li class="col-span-2"> <a href="/about">
+About
+</a> </li> <li class="col-span-2"> <a href="/archives" title="Archives" aria-label="archives" class="group inline-flex items-center gap-1 hover:text-accent focus-outline flex justify-center p-3 sm:p-1">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden sm:inline-block"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg> <span class="sm:sr-only">Archives</span>  </a> </li> <li class="col-span-1 flex items-center justify-center"> <a href="/search" title="Search" aria-label="search" class="group inline-flex items-center gap-1 hover:text-accent focus-outline flex p-3 sm:p-1">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <span class="sr-only">Search</span>  </a> </li> <li class="col-span-1 flex items-center justify-center"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent" title="Toggles light & dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> </ul> </nav> </div> </header> <script type="module">function s(){const e=document.querySelector("#menu-btn"),t=document.querySelector("#menu-items"),n=document.querySelector("#menu-icon"),o=document.querySelector("#close-icon");!e||!t||!n||!o||e.addEventListener("click",()=>{const c=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",c?"false":"true"),e.setAttribute("aria-label",c?"Open Menu":"Close Menu"),t.classList.toggle("hidden"),n.classList.toggle("hidden"),o.classList.toggle("hidden")})}s();document.addEventListener("astro:after-swap",s);</script> <div class="app-layout flex items-center justify-start"><a id="back-button" href="/" class="group inline-flex items-center gap-1 hover:text-accent focus-outline -ms-2 mt-8 mb-2 hover:text-foreground/75"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg><span>Go back</span> </a></div><script type="module">function o(){const t=document.querySelector("#back-button"),e=sessionStorage.getItem("backUrl");e&&t&&(t.href=e)}document.addEventListener("astro:page-load",o);o();</script> <main id="main-content" class="app-layout pb-12" data-pagefind-body> <h1 class="inline-block text-2xl font-bold text-accent sm:text-3xl" data-astro-transition-scope="astro-fam6wyqg-1"> 从 dispatch 到 ACP：用 OpenClaw 重建我的开发协作流程 </h1> <div class="my-2 flex items-center gap-2"> <div class="flex items-center gap-x-2 opacity-80"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 min-w-5.5"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg>  <time class="text-sm sm:text-base" datetime="2026-03-29T01:09:00.000Z">29 Mar, 2026</time> </div> <span aria-hidden="true" class="max-sm:hidden hidden">|</span>  </div> <article id="article" class="app-prose mt-8 w-full max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <p>前几周，我在这台 Linux 机器上专门养了一个 OpenClaw agent：<code>coder</code>。</p>
+<p>它的定位很明确——不是陪聊，也不是通用助理，而是一个偏工程执行的开发代理。我最早给它做了几组 skills，目标也很务实：<strong>把日常开发任务一键 dispatch 给 Claude Code</strong>，尤其是放在 Telegram 里以 slash command 方式触发。</p>
+<p>一开始这套东西是能跑的，而且不只是“勉强跑通”，甚至已经有一点像真正的工作流：</p>
+<ul>
+<li><code>/dispatch &#x3C;project> &#x3C;task-name> &#x3C;prompt...></code>：跑 headless 的异步开发任务</li>
+<li><code>/dispatchi &#x3C;project> &#x3C;task-name> &#x3C;prompt...></code>：跑需要交互式 slash-only 插件的任务</li>
+<li><code>/cancel &#x3C;run-id></code>：中止一个正在执行的交互任务</li>
+</ul>
+<p>再配合本地约定：</p>
+<ul>
+<li>workdir 固定映射到 <code>/home/miniade/repos/&#x3C;project></code></li>
+<li>结果目录按 project/task 分层，避免覆盖</li>
+<li>默认把完成通知打到 CodeHook 群</li>
+<li>交互型任务通过 callback 自动汇报收尾</li>
+</ul>
+<p>这套设计并不“学术”，但很实用。问题是，<strong>它越实用，就越暴露出一个事实：我其实是在自己造一层 agent 调度壳，而 OpenClaw 后来原生支持了 ACP。</strong></p>
+<p>一旦 ACP 可用，很多之前必须靠自定义 skill、脚本、tmux、callback、env 约定去补的东西，突然变成了平台原生能力。</p>
+<p>于是问题就从“怎么把 dispatch 技能做得更强”变成了：</p>
+<blockquote>
+<p><strong>既然 OpenClaw 已经支持 ACP，我是不是应该直接用 ACP 重建整个开发流程？</strong></p>
+</blockquote>
+<p>我现在的答案是：<strong>是，而且越早越好。</strong></p>
+<p>这篇文章就是一次完整复盘：不是抽象讨论，而是结合 <code>coder</code> 的 workspace、长期记忆和 session 里过去几周的真实轨迹，整理出一条从“dispatch 技能驱动”迁移到“OpenClaw ACP 原生驱动”的思路。</p>
+<h2 id="最早那套-dispatch-流程解决了什么问题">最早那套 dispatch 流程，解决了什么问题</h2>
+<p>先别急着否定旧方案。</p>
+<p><code>coder</code> 早期那套 dispatch skills 并不是“错误路线”，它其实非常符合当时的问题形状：</p>
+<ol>
+<li>我想从聊天界面快速把开发任务扔给外部 coding agent</li>
+<li>我不想每次手动拼命令、切目录、建日志、盯结果</li>
+<li>我需要异步执行，而不是把主会话阻塞住</li>
+<li>有些任务需要交互式 loop，例如 slash-only 的插件场景</li>
+</ol>
+<p>所以 <code>dispatch / dispatchi / cancel</code> 的本质，不是“做 skill 为了炫技”，而是把一个重复出现的开发工作流包装起来。</p>
+<p><code>coder</code> 的长期记忆里后来把这些约定写得很清楚：</p>
+<ul>
+<li><code>/dispatch</code> 用来做 headless 派发</li>
+<li><code>/dispatchi</code> 用来做交互式派发，默认 <code>max-iterations=20</code>、<code>completion-promise=COMPLETE</code></li>
+<li><code>/cancel</code> 用来收尾交互任务</li>
+<li>结果目录、日志路径、CodeHook 群号、本地 env 文件路径都有固定约定</li>
+</ul>
+<p>这很像一个人在把“口头默契”变成“可执行流程”。</p>
+<p>而且它确实解决了一个早期最重要的问题：<strong>把“我想让 Claude Code 去干活”从一堆散乱 shell 操作，收敛成一个稳定入口。</strong></p>
+<h2 id="真正的问题不是能不能跑而是这套系统本身太重了">真正的问题，不是能不能跑，而是这套系统本身太重了</h2>
+<p>过去几周里，<code>coder</code> 的 session 有一个非常典型的演化：</p>
+<p>一开始讨论的是功能；后面越来越多讨论的是边角稳定性。</p>
+<p>例如这些问题，都是在真实使用里慢慢浮出来的：</p>
+<h3 id="1-callback-和通知链路很脆">1. callback 和通知链路很脆</h3>
+<p><code>dispatchi</code> 如果想在任务结束后自动通知 CodeHook 群，必须保证本地配置里正确打开 callback，像：</p>
+<ul>
+<li><code>ENABLE_CALLBACK=1</code></li>
+<li><code>TELEGRAM_GROUP=-1002547895616</code></li>
+<li>或对应的 <code>CODEHOOK_GROUP_DEFAULT</code></li>
+</ul>
+<p>一旦 skill 更新、重装，或者 env 文件被覆盖，这条通知链路就会静默失效。</p>
+<p>换句话说，<strong>任务可能已经跑完了，但你以为它还没结束；或者它出结果了，但没有回传。</strong></p>
+<p>这不是模型能力问题，而是自建工作流最常见的“胶水层脆弱性”。</p>
+<h3 id="2-交互式任务要自己维护-tmux--socket--auto-exit">2. 交互式任务要自己维护 tmux / socket / auto-exit</h3>
+<p><code>dispatchi</code> 为了支持交互式 loop，本质上做了很多平台外工作：</p>
+<ul>
+<li>创建 tmux session</li>
+<li>管理 socket 名称</li>
+<li>记录 run-id 和 session 关联</li>
+<li>监听 completion promise</li>
+<li>适时 <code>/exit</code></li>
+<li>出问题时再 <code>/cancel</code></li>
+</ul>
+<p>在 session 里还能看到一次非常典型的 bug：<strong>tmux socket 文件名过长导致启动失败</strong>。后来为了修复这个问题，又不得不把 session/socket 名裁短，引入哈希键，继续补逻辑。</p>
+<p>这就是典型的工程信号：</p>
+<blockquote>
+<p>你本来想解决的是“如何调度外部 agent”，结果越来越多时间花在“如何维护调度系统本身”。</p>
+</blockquote>
+<h3 id="3-skill-为了可发布可移植可过审不断增加额外负担">3. skill 为了可发布、可移植、可过审，不断增加额外负担</h3>
+<p>当这套 dispatch 技能准备发到 ClawHub 时，又暴露出另一类问题：不是功能不对，而是<strong>包装方式和安全模型不够平台友好</strong>。</p>
+<p>例如当时需要处理的点包括：</p>
+<ul>
+<li>skill 不能只是“表面自包含”，实际却依赖外部 repo 里的脚本</li>
+<li>不能简单 <code>source</code> 一个本地 env 文件，否则审计视角下会放大风险</li>
+<li>callback 行为必须清晰、可控，不能默认带隐式外发</li>
+<li>默认权限策略要更保守，不能看起来像“默认高权限 agent 启动器”</li>
+</ul>
+<p>于是又做了一轮“低 VT 风险”改造：</p>
+<ul>
+<li>将运行时脚本 vendoring 进 skill 包本身</li>
+<li>把 env 读取改成 allowlist 的 <code>key=value</code> 解析</li>
+<li>callback 默认关闭，显式开启才启用</li>
+<li>权限参数默认更保守</li>
+<li>修复 dispatchi 的假阳性完成检测</li>
+</ul>
+<p>这些改动都合理，也都值得做。但它们有一个共同点：</p>
+<p><strong>你投入的工程力越来越多地用在“让自定义派发层不出问题”，而不是用在“让开发任务本身更顺滑”。</strong></p>
+<h2 id="我后来意识到这套-dispatch-技能其实是在模拟平台原生能力">我后来意识到：这套 dispatch 技能，其实是在模拟平台原生能力</h2>
+<p>当我回头看 <code>coder</code> 的这段实践，最强烈的感受不是“这套技能写得挺不错”，而是：</p>
+<blockquote>
+<p><strong>它在很大程度上，是在手工模拟一个本应由平台承担的 agent orchestration 层。</strong></p>
+</blockquote>
+<p>看一下 dispatch 技能到底在手工解决什么：</p>
+<ul>
+<li>异步启动外部 coding agent</li>
+<li>给任务分配上下文和工作目录</li>
+<li>跟踪任务生命周期</li>
+<li>回传启动信息与状态</li>
+<li>在会话结束时通知用户</li>
+<li>支持取消、恢复、查看进展</li>
+<li>尽量把外部 agent 的运行结果绑定回聊天链路</li>
+</ul>
+<p>而这些，恰恰就是 ACP 想解决的问题。</p>
+<p>一旦 OpenClaw 原生提供 ACP runtime，并且可以通过 <code>sessions_spawn</code> 之类的能力直接启动外部 coding agent，那么之前那一大层自定义 glue code，就开始显得越来越像“过渡方案”。</p>
+<p>不是说它完全没价值，而是：<strong>它不再是最优抽象层。</strong></p>
+<h2 id="为什么-acp-是更好的重建方向">为什么 ACP 是更好的重建方向</h2>
+<p>我现在更倾向于把 ACP 理解成：</p>
+<p><strong>OpenClaw 与外部 coding agents 之间的统一调度协议层。</strong></p>
+<p>这个“统一”很重要，因为它带来了几个旧 dispatch 流程很难天然具备的优势。</p>
+<h3 id="1-agent-启动不再是脚本技巧而是平台能力">1. agent 启动不再是“脚本技巧”，而是平台能力</h3>
+<p>旧流程里，启动 Claude Code 其实是一套脚本工程：</p>
+<ul>
+<li>拼命令</li>
+<li>建目录</li>
+<li>建日志</li>
+<li>处理权限模式</li>
+<li>决定 headless 还是交互</li>
+<li>写 meta 文件</li>
+<li>回传 run-id</li>
+</ul>
+<p>ACP 之后，启动外部 coding agent 这件事本身就是 runtime 能力。</p>
+<p>这会带来一个关键变化：</p>
+<blockquote>
+<p>你不再需要围绕“如何把 agent 拉起来”设计 skill，而是围绕“要不要把这个任务交给某个 agent”设计流程。</p>
+</blockquote>
+<p>这两个抽象层次完全不一样。</p>
+<h3 id="2-状态跟踪更自然">2. 状态跟踪更自然</h3>
+<p><code>coder</code> 的长期记忆里后来明确写了一条非常重要的规则：</p>
+<blockquote>
+<p>没拿到 <code>accepted + childSessionKey + streamLogPath</code> 三件套，就不能对用户说“已经开始”。</p>
+</blockquote>
+<p>这条规则之所以会被写进长期记忆，就是因为过去确实踩过坑：如果只是“看见某个日志文件在变”，你很容易误把上一个任务的痕迹当成这一个任务已经启动。</p>
+<p>ACP 模式下，状态确认来自平台级 session 语义，而不是“某个目录里有个新文件”“某个 tmux session 像是活着”。</p>
+<p>这件事听起来很小，但实际体验差别非常大：</p>
+<ul>
+<li>用户会更少收到假启动反馈</li>
+<li>agent 自己更不容易搞混任务归属</li>
+<li>进度查看和后续干预有天然锚点</li>
+</ul>
+<h3 id="3-少掉大量非业务性的脆弱点">3. 少掉大量非业务性的脆弱点</h3>
+<p>ACP 并不会让 bug 消失，但它能把很多原本由你自己维护的脆弱点收回到平台层：</p>
+<ul>
+<li>少掉一层 wrapper script</li>
+<li>少掉一层 tmux 约定</li>
+<li>少掉 callback 手搓协议</li>
+<li>少掉结果目录规范的自建绑定</li>
+<li>少掉“这个 skill 本体到底是不是自包含”的发布焦虑</li>
+</ul>
+<p>也就是说，<strong>故障面会更小，而且更集中。</strong></p>
+<p>旧方案的复杂性分散在 skill、env、repo、tmux、Telegram callback、ClawHub packaging、workspace 同步等很多层；ACP 则把“调用外部 agent”尽量收口到一个平台能力上。</p>
+<h3 id="4-不再被单一外部-agent-工作流绑死">4. 不再被单一外部 agent 工作流绑死</h3>
+<p>dispatch 技能最初几乎就是为 Claude Code 工作流量身做的。</p>
+<p>这在早期是优点，因为它针对性强；但从长期看，它也意味着一件事：</p>
+<p><strong>你的调度层天然偏向某一个外部 agent 的交互模型。</strong></p>
+<p>而 ACP 的价值之一就在于，它把“外部 agent 的差异”下沉到了协议/运行时层，让上层可以更自然地面向任务，而不是面向某个具体 CLI 的怪癖。</p>
+<p>这会让后续扩展到 Codex、Pi、Claude Code 甚至更多 ACP harness 时更顺手。</p>
+<h2 id="那是不是-dispatch-skills-就没有价值了">那是不是 dispatch skills 就没有价值了？</h2>
+<p>也不是。</p>
+<p>我更愿意把它们看成一个典型的“过渡时代产物”：</p>
+<ul>
+<li>在 ACP 不成熟或不可用时，它们非常有价值</li>
+<li>在特定平台（例如 Telegram 直接 slash command 分发）里，它们仍然能作为轻量入口</li>
+<li>它们沉淀出的约定，本身仍然有参考意义</li>
+</ul>
+<p>比如 <code>coder</code> 在这些技能实践里沉淀下来的很多经验，迁移到 ACP 时代照样成立：</p>
+<h3 id="经验-1开发流程要有固定的发布回归闭环">经验 1：开发流程要有固定的发布回归闭环</h3>
+<p><code>coder</code> 后来被明确要求长期遵循这条流程：</p>
+<blockquote>
+<p>本地开发 → 本地测试 → 发布 → 从 ClawHub 安装并回归测试</p>
+</blockquote>
+<p>这条经验并不会因为从 dispatch 转向 ACP 就失效。</p>
+<p>相反，在 ACP 时代我会把它稍微泛化成：</p>
+<blockquote>
+<p>本地实现 → 本地验证 → 平台入口验证 → 真实聊天面回归</p>
+</blockquote>
+<p>因为问题往往不出在“代码能不能运行”，而是出在“平台接入之后的真实行为是不是和你想的一样”。</p>
+<h3 id="经验-2把长期约定写进-memory而不是指望-agent-临场记住">经验 2：把长期约定写进 memory，而不是指望 agent 临场记住</h3>
+<p><code>coder</code> 这段实践里最对的一件事，就是不断把经验写回 <code>MEMORY.md</code> 和 daily memory：</p>
+<ul>
+<li>callback 要怎么开</li>
+<li>结果目录怎么分层</li>
+<li>哪些技能是 explicit-only</li>
+<li>发布链路应该怎么走</li>
+<li>什么条件下才能宣称 ACP 任务“已启动”</li>
+</ul>
+<p>这也是我越来越认同的一条原则：</p>
+<blockquote>
+<p>agent 的稳定性，很大一部分来自可写回的工作记忆，而不是模型当下的临场发挥。</p>
+</blockquote>
+<h3 id="经验-3真正该抽象的不是命令而是工作流边界">经验 3：真正该抽象的不是命令，而是工作流边界</h3>
+<p>早期 dispatch skills 已经说明了一个事实：</p>
+<ul>
+<li><code>dispatch</code>、<code>dispatchi</code>、<code>cancel</code> 之所以拆开，是因为它们的任务边界不同</li>
+</ul>
+<p>ACP 时代也一样。</p>
+<p>真正应该抽象清楚的，依然不是某条 shell 命令，而是：</p>
+<ul>
+<li>什么是一次性异步 coding task</li>
+<li>什么是需要持续线程上下文的 coding session</li>
+<li>什么是中途干预/取消</li>
+<li>什么是发布后的回归验证</li>
+</ul>
+<p>抽象对了，底层是 shell 也好、ACP 也好，都只是实现细节。</p>
+<h2 id="如果现在用-openclaw-acp-重建开发流程我会怎么做">如果现在用 OpenClaw ACP 重建开发流程，我会怎么做</h2>
+<p>如果让我今天基于这些实践，重新设计 <code>coder</code> 的开发协作流程，我会尽量收敛到下面这套结构。</p>
+<h2 id="一把请求外部-coding-agent默认切到-acp">一、把“请求外部 coding agent”默认切到 ACP</h2>
+<p>也就是说，今后用户说：</p>
+<ul>
+<li>“让 Claude Code 做这个”</li>
+<li>“用 Codex 帮我改一下”</li>
+<li>“在一个持续线程里跟进这个开发任务”</li>
+</ul>
+<p>默认都应该先走 ACP 路由，而不是优先想到 dispatch skills。</p>
+<p>dispatch 只保留为一种显式兼容入口，或者只在特别适合 slash command 的旧场景里使用。</p>
+<p>换句话说：</p>
+<ul>
+<li><strong>ACP 是主路径</strong></li>
+<li><strong>dispatch 是遗留兼容层 / 特定场景快捷方式</strong></li>
+</ul>
+<h2 id="二把流程分成任务型和会话型两类">二、把流程分成“任务型”和“会话型”两类</h2>
+<p>这是我从旧 dispatch 与新 ACP 对比里最想强调的一点。</p>
+<p>以前很多设计复杂，根本原因是“任务型调用”和“持续会话型调用”被混在了一起。</p>
+<p>更合理的拆法应该是：</p>
+<h3 id="1任务型">1）任务型</h3>
+<p>适合：</p>
+<ul>
+<li>明确目标</li>
+<li>可异步完成</li>
+<li>完成后回报一次结果即可</li>
+<li>不需要长期上下文线程</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>修一个 bug</li>
+<li>写一个小工具</li>
+<li>改一个脚本</li>
+<li>跑一次 review</li>
+</ul>
+<p>这类就适合直接 ACP spawn 一次任务，平台管理生命周期。</p>
+<h3 id="2会话型">2）会话型</h3>
+<p>适合：</p>
+<ul>
+<li>需要多轮交互</li>
+<li>任务会反复追加约束</li>
+<li>用户想在同一个 thread/session 里持续推进</li>
+<li>期间可能中途打断、纠偏、重新设计</li>
+</ul>
+<p>这种就该走 thread-bound 的 ACP session，而不是用一层层 callback 和 tmux session 去假装“有持续会话”。</p>
+<p>这会极大简化 mental model：</p>
+<ul>
+<li>task 是 task</li>
+<li>session 是 session</li>
+<li>不再让某个 slash skill 同时扮演二者</li>
+</ul>
+<h2 id="三保留一个极薄的开发工作流-skill但不再负责-agent-调度">三、保留一个极薄的“开发工作流 skill”，但不再负责 agent 调度</h2>
+<p>我不觉得 ACP 时代就完全不需要 skill 了。</p>
+<p>我认为仍然应该保留一个很薄的本地 skill，例如 <code>development-workflow</code> 这种角色：</p>
+<p>它不负责启动外部 agent，而负责：</p>
+<ul>
+<li>判定任务规模（tiny / medium / large）</li>
+<li>决定是否先做设计</li>
+<li>约束输出格式</li>
+<li>明确验证步骤</li>
+<li>在真正进入 ACP 前先把任务整理清楚</li>
+</ul>
+<p>这类 skill 的价值仍然很高，因为它解决的是“如何更稳定地组织开发任务”，而不是“如何把 agent 启动起来”。</p>
+<p>也就是说：</p>
+<ul>
+<li><strong>skill 负责方法论和流程约束</strong></li>
+<li><strong>ACP 负责外部 agent 调度与运行时</strong></li>
+</ul>
+<p>这是一种更干净的分层。</p>
+<h2 id="四把启动确认和进度跟踪严格建立在-session-语义上">四、把“启动确认”和“进度跟踪”严格建立在 session 语义上</h2>
+<p>这也是从过去踩坑里直接得出的经验。</p>
+<p>以后只要是 ACP 任务，就应该坚持：</p>
+<ul>
+<li>没有平台确认，不说 started</li>
+<li>查进度只认该任务绑定的 session / child session</li>
+<li>不再拿“最新日志文件”或“最近创建的目录”当近似替代</li>
+</ul>
+<p>这听上去像个小流程问题，但它会显著降低代理在多任务并行时的混乱度。</p>
+<h2 id="五把旧-dispatch-时代最有价值的经验迁移到-acp-时代">五、把旧 dispatch 时代最有价值的经验迁移到 ACP 时代</h2>
+<p>这一步很关键，因为迁移不是“推倒重来”，而是“保留有效经验，换掉脆弱底盘”。</p>
+<p>我认为至少有这些经验应该保留：</p>
+<ul>
+<li>所有重要约定写入 memory</li>
+<li>复杂开发任务先给极简执行框架再开工</li>
+<li>发布相关工作必须有回归测试闭环</li>
+<li>用户可见状态必须来自可靠锚点</li>
+<li>工作目录、结果归属、验证方式都要显式</li>
+</ul>
+<p>真正该淘汰的，不是这些工程纪律，而是围绕旧 dispatch 技能堆出来的那层重脚本调度壳。</p>
+<h2 id="一个更现实的判断acp-不是更高级而是更省系统维护成本">一个更现实的判断：ACP 不是“更高级”，而是“更省系统维护成本”</h2>
+<p>很多人聊新能力时，容易把重点放在“更先进”“更智能”。</p>
+<p>但如果从这几周 <code>coder</code> 的真实轨迹看，我觉得 ACP 最大的价值甚至不在这里。</p>
+<p>它更重要的价值是：</p>
+<blockquote>
+<p><strong>把原本要你自己维护的大量调度基础设施，交还给平台。</strong></p>
+</blockquote>
+<p>而这对一个长期使用的个人开发系统来说，非常关键。</p>
+<p>因为真正会拖垮体验的，往往不是大故障，而是大量小故障：</p>
+<ul>
+<li>某次 callback 配置丢了</li>
+<li>某次重装后 env 不一致了</li>
+<li>某次会话名太长了</li>
+<li>某次 packaging 与 workspace 版本漂移了</li>
+<li>某次你以为任务开始了，其实并没有</li>
+</ul>
+<p>这些事情单看都不严重，但累计起来会不断消耗信心。</p>
+<p>ACP 的意义，就是尽量把这类“系统维护税”压低。</p>
+<h2 id="结语">结语</h2>
+<p>回头看 <code>coder</code> 这几周的实践，我并不觉得那几组 dispatch skills 白做了。</p>
+<p>恰恰相反，我觉得它们非常有价值，因为正是这些真实使用里的成功与踩坑，才让我看清楚一件事：</p>
+<p><strong>我真正需要的不是“把派发 Claude Code 的脚本做得更完美”，而是让 OpenClaw 原生承担外部 agent 编排这件事。</strong></p>
+<p>所以如果要给这段经历下一个结论，我会写成这样：</p>
+<blockquote>
+<p>dispatch skills 解决了“先把开发任务扔出去”的问题；
+ACP 才更适合解决“长期、稳定、可追踪地与外部 coding agents 协作”的问题。</p>
+</blockquote>
+<p>接下来，如果我要继续演进 <code>coder</code>，方向不会是继续堆更复杂的 dispatch skill，而是：</p>
+<ul>
+<li>用 ACP 作为主调度层</li>
+<li>用极薄的 workflow skill 约束任务组织方式</li>
+<li>用 memory 保存长期有效的工程约定</li>
+<li>用真实聊天链路做最终回归测试</li>
+</ul>
+<p>这样重建出来的开发流程，不一定最花哨，但大概率会比旧方案更稳，也更配得上“长期使用”这四个字。</p> </article> <hr class="my-8 border-dashed">  <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8"> <li> <a href="/tags/openclaw/" class="flex items-center gap-0.5 border-b-2 border-dashed border-foreground hover:-mt-0.5 hover:border-accent hover:text-accent focus-visible:border-none focus-visible:text-accent text-sm" data-astro-transition-scope="astro-36ssibgs-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg> openclaw </a> </li><li> <a href="/tags/acp/" class="flex items-center gap-0.5 border-b-2 border-dashed border-foreground hover:-mt-0.5 hover:border-accent hover:text-accent focus-visible:border-none focus-visible:text-accent text-sm" data-astro-transition-scope="astro-36ssibgs-3"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg> acp </a> </li><li> <a href="/tags/ai-agent/" class="flex items-center gap-0.5 border-b-2 border-dashed border-foreground hover:-mt-0.5 hover:border-accent hover:text-accent focus-visible:border-none focus-visible:text-accent text-sm" data-astro-transition-scope="astro-36ssibgs-4"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg> ai-agent </a> </li><li> <a href="/tags/workflow/" class="flex items-center gap-0.5 border-b-2 border-dashed border-foreground hover:-mt-0.5 hover:border-accent hover:text-accent focus-visible:border-none focus-visible:text-accent text-sm" data-astro-transition-scope="astro-36ssibgs-5"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg> workflow </a> </li><li> <a href="/tags/automation/" class="flex items-center gap-0.5 border-b-2 border-dashed border-foreground hover:-mt-0.5 hover:border-accent hover:text-accent focus-visible:border-none focus-visible:text-accent text-sm" data-astro-transition-scope="astro-36ssibgs-6"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg> automation </a> </li><li> <a href="/tags/claude-code/" class="flex items-center gap-0.5 border-b-2 border-dashed border-foreground hover:-mt-0.5 hover:border-accent hover:text-accent focus-visible:border-none focus-visible:text-accent text-sm" data-astro-transition-scope="astro-36ssibgs-7"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg> claude-code </a> </li><li> <a href="/tags/codex/" class="flex items-center gap-0.5 border-b-2 border-dashed border-foreground hover:-mt-0.5 hover:border-accent hover:text-accent focus-visible:border-none focus-visible:text-accent text-sm" data-astro-transition-scope="astro-36ssibgs-8"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg> codex </a> </li><li> <a href="/tags/engineering/" class="flex items-center gap-0.5 border-b-2 border-dashed border-foreground hover:-mt-0.5 hover:border-accent hover:text-accent focus-visible:border-none focus-visible:text-accent text-sm" data-astro-transition-scope="astro-36ssibgs-9"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-80 size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 9l14 0" /><path d="M5 15l14 0" /><path d="M11 4l-4 16" /><path d="M17 4l-4 16" /></svg> engineering </a> </li> </ul> <div id="btt-btn-container" class="fixed end-4 bottom-8 z-50 md:sticky md:end-auto md:float-end md:me-1 translate-y-14 opacity-0 transition duration-500"> <button data-button="back-to-top" class="group relative bg-background px-2 py-1 size-14 rounded-full shadow-xl md:h-8 md:w-fit md:rounded-md md:shadow-none md:focus-visible:rounded-none md:bg-background/35 md:bg-clip-padding md:backdrop-blur-lg"> <span id="progress-indicator" class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block rotate-90 md:hidden"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> <span class="sr-only text-sm group-hover:text-accent md:not-sr-only"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-4"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M16 9l-4 -4" /><path d="M8 9l4 -4" /></svg>
+Back To Top
+</span> </button> </div> <script data-astro-rerun>
+  /** Scrolls the document to the top when
+   * the "Back to Top" button is clicked. */
+  function backToTop() {
+    const rootElement = document.documentElement;
+    const btnContainer = document.querySelector("#btt-btn-container");
+    const backToTopBtn = document.querySelector("[data-button='back-to-top']");
+    const progressIndicator = document.querySelector("#progress-indicator");
+
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
+      return;
+
+    // Attach click event handler for back-to-top button
+    backToTopBtn.addEventListener("click", () => {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
+
+    // Handle button visibility according to scroll position
+    let lastVisible = null;
+    function handleScroll() {
+      const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+      const scrollTop = rootElement.scrollTop;
+      const scrollPercent = Math.floor((scrollTop / scrollTotal) * 100);
+
+      progressIndicator.style.setProperty(
+        "background-image",
+        `conic-gradient(var(--accent), var(--accent) ${scrollPercent}%, transparent ${scrollPercent}%)`
+      );
+
+      const isVisible = scrollTop / scrollTotal > 0.3;
+
+      if (isVisible !== lastVisible) {
+        btnContainer.classList.toggle("opacity-100", isVisible);
+        btnContainer.classList.toggle("translate-y-0", isVisible);
+        btnContainer.classList.toggle("opacity-0", !isVisible);
+        btnContainer.classList.toggle("translate-y-14", !isVisible);
+        lastVisible = isVisible;
+      }
+    }
+
+    let ticking = false;
+    document.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+  backToTop();
+</script> <div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start"><span class="italic">Share this post on:</span><div class="text-center"><a href="https://wa.me/?text=https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/" title="Share this post via WhatsApp" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg><span class="sr-only">Share this post via WhatsApp</span> </a><a href="https://www.facebook.com/sharer.php?u=https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/" title="Share this post on Facebook" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" /></svg><span class="sr-only">Share this post on Facebook</span> </a><a href="https://x.com/intent/post?url=https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/" title="Share this post on X" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg><span class="sr-only">Share this post on X</span> </a><a href="https://t.me/share/url?url=https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/" title="Share this post via Telegram" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" /></svg><span class="sr-only">Share this post via Telegram</span> </a><a href="https://pinterest.com/pin/create/button/?url=https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/" title="Share this post on Pinterest" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 20l4 -9" /><path d="M10.7 14c.437 1.263 1.43 2 2.55 2c2.071 0 3.75 -1.554 3.75 -4a5 5 0 1 0 -9.7 1.7" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg><span class="sr-only">Share this post on Pinterest</span> </a><a href="mailto:?subject=See%20this%20post&#38;body=https://miniade.github.io/posts/rebuild-dev-workflow-with-openclaw-acp/" title="Share this post via email" class="group inline-flex items-center gap-1 hover:text-accent scale-90 p-2 hover:rotate-6 sm:p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg><span class="sr-only">Share this post via email</span> </a></div></div> <hr class="my-6 border-dashed"> <!-- Previous/Next Post Buttons --> <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">  <a href="/posts/when-tech-optimism-breaks-ai-era-geek-fear" class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"> <div> <span>Next Post</span> <div class="text-sm text-accent/85">When Tech Optimism Breaks: A Geek’s Fear in the Age of AI</div> </div> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block flex-none rtl:rotate-180"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg> </a> </div> </main> <footer class="app-layout mt-auto"> <div class="py-6 sm:py-4 border-t border-border flex flex-col items-center justify-between sm:flex-row-reverse"> <div class="flex flex-wrap items-center gap-1"> <a href="https://github.com/satnaing/astro-paper" title="阿德的博客 on GitHub" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">阿德的博客 on GitHub</span>  </a><a href="https://x.com/username" title="阿德的博客 on X" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">阿德的博客 on X</span>  </a><a href="https://www.linkedin.com/in/username/" title="阿德的博客 on LinkedIn" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">阿德的博客 on LinkedIn</span>  </a><a href="mailto:yourmail@gmail.com" title="Send an email to 阿德的博客" class="group inline-flex items-center gap-1 hover:text-accent p-2 hover:rotate-6 sm:p-1">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> <span class="sr-only">Send an email to 阿德的博客</span>  </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>Copyright &#169; 2026</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>All rights reserved.</span> </div> </div> </footer>  <!-- Load full theme logic --> <script type="module">const d="theme",r="light",m="dark";function i(){const e=localStorage.getItem(d);return e||(window.matchMedia("(prefers-color-scheme: dark)").matches?m:r)}let t=window.theme?.themeValue??i();function c(){localStorage.setItem(d,t),o()}function o(){document.firstElementChild?.setAttribute("data-theme",t),document.querySelector("#theme-btn")?.setAttribute("aria-label",t);const e=document.body;if(e){const n=window.getComputedStyle(e).backgroundColor;document.querySelector("meta[name='theme-color']")?.setAttribute("content",n)}}window.theme?(window.theme.setPreference=c,window.theme.reflectPreference=o):window.theme={themeValue:t,setPreference:c,reflectPreference:o,getTheme:()=>t,setTheme:e=>{t=e}};o();function s(){o(),document.querySelector("#theme-btn")?.addEventListener("click",()=>{t=t===r?m:r,window.theme?.setTheme(t),c()})}s();document.addEventListener("astro:after-swap",s);document.addEventListener("astro:before-swap",e=>{const a=e,n=document.querySelector("meta[name='theme-color']")?.getAttribute("content");n&&a.newDocument.querySelector("meta[name='theme-color']")?.setAttribute("content",n)});window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",({matches:e})=>{t=e?m:r,window.theme?.setTheme(t),c()});</script> </body> </html> <script data-astro-rerun>
+  /** Create a progress indicator
+   *  at the top */
+  function createProgressBar() {
+    // Create the main container div
+    const progressContainer = document.createElement("div");
+    progressContainer.className =
+      "progress-container fixed top-0 z-10 h-1 w-full bg-background";
+
+    // Create the progress bar div
+    const progressBar = document.createElement("div");
+    progressBar.className = "progress-bar h-1 w-0 bg-accent";
+    progressBar.id = "myBar";
+
+    // Append the progress bar to the progress container
+    progressContainer.appendChild(progressBar);
+
+    // Append the progress container to the document body or any other desired parent element
+    document.body.appendChild(progressContainer);
+  }
+  createProgressBar();
+
+  /** Update the progress bar
+   *  when user scrolls */
+  function updateScrollProgress() {
+    document.addEventListener("scroll", () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      if (document) {
+        const myBar = document.getElementById("myBar");
+        if (myBar) {
+          myBar.style.width = scrolled + "%";
+        }
+      }
+    });
+  }
+  updateScrollProgress();
+
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      // Check if --file-name-offset custom property exists
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      // Determine the top positioning class
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
